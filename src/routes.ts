@@ -19,6 +19,7 @@ const routes = createBrowserRouter(
           fallback: createElement(ErrorPage, {
             code: 401,
             message: 'Session is invalid or missing.',
+            showHomeButton: false,
           }),
         },
         createElement(DefaultLayout),

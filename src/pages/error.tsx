@@ -43,20 +43,23 @@ const useStyles = makeStyles({
 type ErrorProps = {
   code: number;
   message: string;
+  showHomeButton?: boolean;
 };
 
-const ErrorPage = ({ code, message }: ErrorProps) => {
+const ErrorPage = ({ code, message, showHomeButton = true }: ErrorProps) => {
   return (
     <div className="h-dvh flex flex-col items-center justify-center gap-4 text-(--colorNeutralForeground2)">
       <Text as="h1" className={useStyles().error} data-text={code}>
         {code}
       </Text>
       <p className="text-2xl">{message}</p>
-      <Link to="/">
-        <Button appearance="primary" icon={<HomeIcon />}>
-          Back to Home
-        </Button>
-      </Link>
+      {showHomeButton && (
+        <Link to="/">
+          <Button appearance="primary" icon={<HomeIcon />}>
+            Back to Home
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };
