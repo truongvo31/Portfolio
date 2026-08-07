@@ -1,6 +1,7 @@
 import { FluentProvider, Spinner, webDarkTheme, webLightTheme } from '@fluentui/react-components';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Suspense, useEffect } from 'react';
+import { makeStyles, tokens } from '@fluentui/react-components';
 import { useTranslation } from 'react-i18next';
 import { RouterProvider } from 'react-router-dom';
 import { queryClient } from './plugins/queryClient';
@@ -11,10 +12,17 @@ import useGlobalState from './stores/useGlobalState';
 import { HtmlLangSync } from './stores/useHtmlLangSync';
 import { useSystemTheme } from './stores/useSystemTheme';
 
+const useStyles = makeStyles({
+  root: {
+    backgroundImage: `linear-gradient(140deg, ${tokens.colorNeutralBackground3}, ${tokens.colorBrandBackground2})`,
+  },
+});
+
 const App = () => {
   const { t } = useTranslation();
   const { theme } = useGlobalState();
   const systemTheme = useSystemTheme();
+  const styles = useStyles();
 
   const actualTheme = theme === 'system' ? systemTheme : theme;
   useEffect(() => {
@@ -25,6 +33,7 @@ const App = () => {
     <FluentProvider
       theme={actualTheme === 'dark' ? webDarkTheme : webLightTheme}
       id="root-fluent-provider"
+      className={styles.root}
     >
       <QueryClientProvider client={queryClient}>
         <LoadingProvider>

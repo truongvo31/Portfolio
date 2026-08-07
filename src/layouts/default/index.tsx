@@ -1,5 +1,5 @@
 import ReactIcon from '@/assets/react.svg';
-import { Tab, TabList, Text, makeStyles, tokens } from '@fluentui/react-components';
+import { Tab, TabList, Text } from '@fluentui/react-components';
 import {
   Home24Filled,
   Home24Regular,
@@ -23,17 +23,10 @@ const getBasePath = (pathname: string): string => {
 
 const SettingsIcon = bundleIcon(Settings24Filled, Settings24Regular);
 
-const useStyles = makeStyles({
-  root: {
-    backgroundImage: `linear-gradient(140deg, ${tokens.colorNeutralBackground3}, ${tokens.colorBrandBackground2})`,
-  },
-});
-
 const DefaultLayout = () => {
   const { t } = useTranslation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { md } = useBreakpoints();
-  const styles = useStyles();
 
   const navItems: NavItem[] = [
     {
@@ -65,7 +58,7 @@ const DefaultLayout = () => {
   }, [location.pathname]);
 
   return (
-    <div className={`h-dvh flex flex-col ${styles.root}`}>
+    <div className="h-dvh flex flex-col">
       <header className="flex items-center justify-between container h-(--header-height)">
         <div className="flex gap-2 items-center">
           <img src={ReactIcon} alt="React Logo" className="size-6 hover:animate-spin" />
