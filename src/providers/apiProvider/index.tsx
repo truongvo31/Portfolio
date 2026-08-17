@@ -29,12 +29,31 @@ const joinURL = (base: string, path: string) => {
   return `${b}/${p}`;
 };
 
-const safeParseJSON = async (response: Response) => {
-  try {
-    return await response.json();
-  } catch {
-    return null;
+const safeParseBody = async <T,>(response: Response): Promise<T | string | null | undefined> => {
+  if (response.status === 204 || response.status === 205) {
+    return undefined;
   }
+
+  const contentLength = response.headers.get('content-length');
+  if (contentLength === '0') {
+    return undefined;
+  }
+
+  const bodyText = await response.text();
+  if (bodyText.trim() === '') {
+    return undefined;
+  }
+
+  const contentType = response.headers.get('content-type') ?? '';
+  if (contentType.includes('application/json')) {
+    try {
+      return JSON.parse(bodyText) as T;
+    } catch {
+      return bodyText;
+    }
+  }
+
+  return bodyText;
 };
 
 const normalizeEndpointPath = (url: string) => url.replace(/^\/+/, '').split(/[?#]/, 1)[0] ?? '';
@@ -131,7 +150,7 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
         clearTimeout(timeoutId);
 
         if (!response.ok) {
-          const errorData = await safeParseJSON(response);
+          const errorData = await safeParseBody(response);
           throw {
             status: response.status,
             statusMessage: response.statusText,
@@ -139,7 +158,7 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
           };
         }
 
-        const data = (await response.json()) as T;
+        const data = (await safeParseBody<T>(response)) as T;
         return {
           error: false,
           status: response.status,
@@ -220,13 +239,41 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
     [request],
   );
 
+  const $put = useCallback(
+    <T,>(url: string, body?: unknown, timeout = 0) =>
+      request<T>(
+        url,
+        {
+          method: 'PUT',
+          body: body ?? undefined,
+        },
+        timeout,
+      ),
+    [request],
+  );
+
+  const $patch = useCallback(
+    <T,>(url: string, body?: unknown, timeout = 0) =>
+      request<T>(
+        url,
+        {
+          method: 'PATCH',
+          body: body ?? undefined,
+        },
+        timeout,
+      ),
+    [request],
+  );
+
   const value = useMemo<ApiContextValue>(
     () => ({
       $get,
       $post,
       $delete,
+      $put,
+      $patch,
     }),
-    [$get, $post, $delete],
+    [$get, $post, $delete, $put, $patch],
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

@@ -1,12 +1,19 @@
-import { FluentProvider, Spinner, webDarkTheme, webLightTheme } from '@fluentui/react-components';
+import {
+  FluentProvider,
+  makeStyles,
+  Spinner,
+  tokens,
+  webDarkTheme,
+  webLightTheme,
+} from '@fluentui/react-components';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Suspense, useEffect } from 'react';
-import { makeStyles, tokens } from '@fluentui/react-components';
 import { useTranslation } from 'react-i18next';
 import { RouterProvider } from 'react-router-dom';
 import { queryClient } from './plugins/queryClient';
 import AsyncDialogProvider from './providers/dialogProvider';
 import LoadingProvider from './providers/loadingProvider';
+import ToasterProvider from './providers/toasterProvider';
 import routes from './routes';
 import useGlobalState from './stores/useGlobalState';
 import { HtmlLangSync } from './stores/useHtmlLangSync';
@@ -36,25 +43,27 @@ const App = () => {
       className={styles.root}
     >
       <QueryClientProvider client={queryClient}>
-        <LoadingProvider>
-          <AsyncDialogProvider>
-            <HtmlLangSync />
-            <Suspense
-              fallback={
-                <div className="flex min-h-dvh items-center justify-center">
-                  <Spinner
-                    appearance={actualTheme === 'dark' ? 'inverted' : 'primary'}
-                    label={t('app.loading')}
-                    labelPosition="below"
-                    size="extra-large"
-                  />
-                </div>
-              }
-            >
-              <RouterProvider router={routes} />
-            </Suspense>
-          </AsyncDialogProvider>
-        </LoadingProvider>
+        <ToasterProvider>
+          <LoadingProvider>
+            <AsyncDialogProvider>
+              <HtmlLangSync />
+              <Suspense
+                fallback={
+                  <div className="flex min-h-dvh items-center justify-center">
+                    <Spinner
+                      appearance={actualTheme === 'dark' ? 'inverted' : 'primary'}
+                      label={t('app.loading')}
+                      labelPosition="below"
+                      size="extra-large"
+                    />
+                  </div>
+                }
+              >
+                <RouterProvider router={routes} />
+              </Suspense>
+            </AsyncDialogProvider>
+          </LoadingProvider>
+        </ToasterProvider>
       </QueryClientProvider>
     </FluentProvider>
   );

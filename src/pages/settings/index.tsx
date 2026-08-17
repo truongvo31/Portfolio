@@ -31,7 +31,7 @@ const SettingsPage = () => {
     <div className="h-full flex flex-col gap-4 container">
       <PageHeader pageTitle={t('settings.title')} description={t('settings.description')} />
 
-      <div className="flex-1 overflow-auto px-6">
+      <div className="flex-1 overflow-auto px-4 md:px-6">
         <fieldset>
           <legend>
             <Text weight="semibold">{t('settings.appearance')}</Text>

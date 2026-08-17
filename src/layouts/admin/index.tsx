@@ -31,7 +31,9 @@ const LayoutContent = () => {
             icon={<Navigation24Regular />}
             appearance="transparent"
           />
-          <Text>Portfolio Admin</Text>
+          <Text weight="semibold" size={400}>
+            Portfolio Admin
+          </Text>
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -43,7 +45,7 @@ const LayoutContent = () => {
       </nav>
       <main className="flex h-[calc(100dvh-var(--header-height))]">
         <AppSidebar />
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 overflow-y-auto">
           <Outlet />
         </div>
       </main>
