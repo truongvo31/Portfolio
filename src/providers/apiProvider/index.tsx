@@ -1,10 +1,15 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { InteractionRequiredAuthError } from '@azure/msal-browser';
+import { useMsal } from '@azure/msal-react';
+import { useCallback, useMemo } from 'react';
+import { msalScopes } from '../../msalConfig';
 import ApiContext from './context';
 import type { ApiContextValue, ApiResponse, GetConfig } from './types';
 
 type RequestOptions = Omit<RequestInit, 'body'> & {
   body?: unknown;
 };
+
+const PROTECTED_ENDPOINT_PREFIXES = ['admin'] as const;
 
 const createQueryString = (params?: GetConfig['params']): string => {
   if (!params) {
@@ -32,28 +37,51 @@ const safeParseJSON = async (response: Response) => {
   }
 };
 
+const normalizeEndpointPath = (url: string) => url.replace(/^\/+/, '').split(/[?#]/, 1)[0] ?? '';
+
+const isProtectedEndpoint = (url: string) => {
+  const normalizedPath = normalizeEndpointPath(url);
+
+  return PROTECTED_ENDPOINT_PREFIXES.some(
+    (prefix) => normalizedPath === prefix || normalizedPath.startsWith(`${prefix}/`),
+  );
+};
+
 const ApiProvider = ({ children }: { children: React.ReactNode }) => {
-  const runtimeHeadersRef = useRef<Record<string, string>>({});
+  const { accounts, instance } = useMsal();
 
-  const setHeader = useCallback<ApiContextValue['setHeader']>((first, second) => {
-    const patch =
-      typeof first === 'string'
-        ? ({ [first]: second } as Record<string, string | null | undefined>)
-        : first;
-
-    Object.entries(patch).forEach(([key, value]) => {
-      if (value === null || value === undefined || value.trim() === '') {
-        delete runtimeHeadersRef.current[key];
-        return;
+  const getAuthorizationHeader = useCallback(
+    async (url: string) => {
+      if (!isProtectedEndpoint(url)) {
+        return null;
       }
 
-      runtimeHeadersRef.current[key] = value;
-    });
-  }, []);
+      const account = accounts[0] ?? instance.getActiveAccount();
+
+      if (!account) {
+        return null;
+      }
+
+      try {
+        const response = await instance.acquireTokenSilent({
+          scopes: msalScopes,
+          account,
+        });
+
+        return `Bearer ${response.accessToken}`;
+      } catch (error) {
+        if (error instanceof InteractionRequiredAuthError) {
+          return null;
+        }
+
+        throw error;
+      }
+    },
+    [accounts, instance],
+  );
 
   const request = useCallback(
     async <T,>(url: string, options: RequestOptions = {}, timeout = 0): Promise<ApiResponse<T>> => {
-      console.log(runtimeHeadersRef.current);
       try {
         let baseURL = import.meta.env.VITE_API_URL as string | undefined;
         if (!baseURL) {
@@ -66,6 +94,17 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
         }
 
         const fullURL = joinURL(baseURL, url);
+        const authorizationHeader = await getAuthorizationHeader(url);
+
+        if (isProtectedEndpoint(url) && !authorizationHeader) {
+          return {
+            error: true,
+            status: 401,
+            message: 'Authentication required',
+            data: undefined,
+          };
+        }
+
         const controller = new AbortController();
         const timeoutId =
           timeout >= 1000 ? setTimeout(() => controller.abort(), timeout) : undefined;
@@ -78,7 +117,7 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
           ...options,
           headers: {
             ...(options.body ? { 'Content-Type': 'application/json' } : {}),
-            ...runtimeHeadersRef.current,
+            ...(authorizationHeader ? { Authorization: authorizationHeader } : {}),
             ...(options.headers || {}),
             ...(import.meta.env.VITE_DEV_ACCESS_KEY
               ? { 'X-Dev-Access-Key': import.meta.env.VITE_DEV_ACCESS_KEY as string }
@@ -142,7 +181,7 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
         };
       }
     },
-    [],
+    [getAuthorizationHeader],
   );
 
   const $get = useCallback(
@@ -186,9 +225,8 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
       $get,
       $post,
       $delete,
-      setHeader,
     }),
-    [$get, $post, $delete, setHeader],
+    [$get, $post, $delete],
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

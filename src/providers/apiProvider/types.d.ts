@@ -17,19 +17,8 @@ export type ApiResponse<T> =
       data: undefined;
     };
 
-export type SetHeaderInput =
-  | Record<string, string | null | undefined>
-  | {
-      key: string;
-      value?: string | null;
-    };
-
 export type ApiContextValue = {
   $get: <T>(url: string, config?: GetConfig, timeout?: number) => Promise<ApiResponse<T>>;
   $post: <T>(url: string, body?: unknown, timeout?: number) => Promise<ApiResponse<T>>;
   $delete: <T>(url: string, config?: GetConfig, timeout?: number) => Promise<ApiResponse<T>>;
-  setHeader: (
-    keyOrHeaders: string | Record<string, string | null | undefined>,
-    value?: string | null,
-  ) => void;
 };
