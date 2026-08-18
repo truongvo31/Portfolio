@@ -7,8 +7,16 @@ import {
   TableHeaderCell,
   TableRow,
   Text,
+  makeStyles,
+  tokens,
 } from '@fluentui/react-components';
-import { Add24Regular, Copy24Regular, Delete24Regular, Edit24Regular } from '@fluentui/react-icons';
+import {
+  Add24Regular,
+  Copy24Regular,
+  Delete24Regular,
+  DismissCircle24Filled,
+  Edit24Regular,
+} from '@fluentui/react-icons';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,6 +37,18 @@ type SessionTableColumn = {
   width?: string;
 };
 
+const useStyles = makeStyles({
+  expiredRow: {
+    color: tokens.colorPaletteRedForeground3,
+  },
+  validRow: {
+    color: tokens.colorPaletteGreenForeground3,
+  },
+  revokedIcon: {
+    color: tokens.colorPaletteRedForeground3,
+  },
+});
+
 const AdminSessionPage = () => {
   const { t } = useTranslation();
   const { setLoading } = useLoading();
@@ -37,6 +57,7 @@ const AdminSessionPage = () => {
   const { $success } = useToaster();
   const { md } = useBreakpoints();
   const { prompt } = useDialog();
+  const styles = useStyles();
 
   const { isLoading, data, refetch } = useQuery({
     queryKey: ['sessions'],
@@ -44,7 +65,13 @@ const AdminSessionPage = () => {
       try {
         const { data, error, message } = await $get<Session[]>('admin/get-sessions');
         if (error) throw new Error(message || t('admin.page.sessions.messages.fetchFailed'));
-        return data;
+        return data.sort((a, b) => {
+          const aValid = !a.isRevoked && !isPastUtcDate(a.expiresAtUtc);
+          const bValid = !b.isRevoked && !isPastUtcDate(b.expiresAtUtc);
+          if (aValid && !bValid) return -1;
+          if (!aValid && bValid) return 1;
+          return 0;
+        });
       } catch (error) {
         $error(t('admin.page.sessions.messages.fetchFailed'), (error as Error).message);
       }
@@ -195,18 +222,25 @@ const AdminSessionPage = () => {
             </TableHeader>
             <TableBody>
               {data?.map((session, index) => (
-                <TableRow key={session.id}>
+                <TableRow
+                  key={session.id}
+                  className={
+                    session.isRevoked || isPastUtcDate(session.expiresAtUtc)
+                      ? styles.expiredRow
+                      : styles.validRow
+                  }
+                >
                   <TableCell>{index + 1}</TableCell>
                   <TableCell className="overflow-hidden text-ellipsis whitespace-nowrap">
                     <Text wrap={false}>{session.id}</Text>
                   </TableCell>
                   <TableCell>
-                    {session.isRevoked
-                      ? t('admin.page.sessions.table.values.yes')
-                      : t('admin.page.sessions.table.values.no')}
+                    {session.isRevoked ? (
+                      <DismissCircle24Filled className={styles.revokedIcon} />
+                    ) : null}
                   </TableCell>
                   {md && <TableCell>{utcToLocalTime(session.expiresAtUtc)}</TableCell>}
-                  <TableCell className="justify-center whitespace-nowrap">
+                  <TableCell>
                     <Button
                       appearance="subtle"
                       icon={<Edit24Regular />}
