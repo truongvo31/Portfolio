@@ -31,7 +31,7 @@ type SessionTableColumn = {
 const AdminSessionPage = () => {
   const { setLoading } = useLoading();
   const { $get, $delete } = useApi();
-  const { $error } = useMessages();
+  const { $error, $confirm, $info } = useMessages();
   const { $success } = useToaster();
   const { md } = useBreakpoints();
   const { prompt } = useDialog();
@@ -96,6 +96,20 @@ const AdminSessionPage = () => {
 
   const handleDeleteSessions = async () => {
     try {
+      const consent = await $confirm(
+        'Delete Sessions',
+        'This action will delete all revoked and expired sessions. Are you sure you want to proceed?',
+      );
+      if (!consent) {
+        return;
+      }
+      const sessionsToBeDeleted = data?.filter(
+        (session) => session.isRevoked || isPastUtcDate(session.expiresAtUtc),
+      );
+      if (!sessionsToBeDeleted || sessionsToBeDeleted.length === 0) {
+        $info('No sessions to delete', 'There are no revoked or expired sessions to delete.');
+        return;
+      }
       setLoading(true);
       const { error, message } = await $delete('admin/empty-sessions');
       if (error) throw new Error(message || 'Failed to delete sessions');

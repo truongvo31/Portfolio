@@ -21,4 +21,6 @@ export type ApiContextValue = {
   $get: <T>(url: string, config?: GetConfig, timeout?: number) => Promise<ApiResponse<T>>;
   $post: <T>(url: string, body?: unknown, timeout?: number) => Promise<ApiResponse<T>>;
   $delete: <T>(url: string, config?: GetConfig, timeout?: number) => Promise<ApiResponse<T>>;
+  $patch: <T>(url: string, body?: unknown, timeout?: number) => Promise<ApiResponse<T>>;
+  $put: <T>(url: string, body?: unknown, timeout?: number) => Promise<ApiResponse<T>>;
 };

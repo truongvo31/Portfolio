@@ -87,17 +87,17 @@ const MessageDialog = ({ title, message, type = 'info' }: MessageDialogProps) =>
             <Text>{message}</Text>
           </DialogContent>
           <DialogActions fluid className="p-3!">
-            {type === 'confirm' && (
-              <Button appearance="secondary" onClick={() => void resolve(false)}>
-                Cancel
-              </Button>
-            )}
             <Button
               appearance={type === 'confirm' ? 'primary' : 'secondary'}
               onClick={() => void resolve(true)}
             >
               OK
             </Button>
+            {type === 'confirm' && (
+              <Button appearance="secondary" onClick={() => void resolve(false)}>
+                Cancel
+              </Button>
+            )}
           </DialogActions>
         </DialogBody>
       </DialogSurface>
