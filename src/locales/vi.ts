@@ -92,6 +92,35 @@ export default {
 
   client: {
     home: {
+      tableOfContents: {
+        title: 'Mục lục',
+        ariaLabel: 'Mục lục',
+        introduction: 'Giới thiệu',
+        skills: {
+          title: 'Kỹ năng',
+          programming: 'Ngôn ngữ lập trình',
+          frameworks: 'Framework',
+          databases: 'Cơ sở dữ liệu',
+          languages: 'Ngôn ngữ',
+        },
+        workHistory: {
+          title: 'Kinh nghiệm làm việc',
+          hitachi: 'Hitachi High-Tech',
+          fujitec: 'Fujitec',
+          usexpress: 'US Express',
+          hoangphuc: 'Hoang Phuc International',
+        },
+        education: {
+          title: 'Học vấn',
+          tdtu: 'Đại học Tôn Đức Thắng',
+          futaba: 'Trường Nhật ngữ Futaba',
+        },
+        projects: {
+          title: 'Dự án',
+          portfolio: 'Website Portfolio',
+          pokedex: 'Pokedex',
+        },
+      },
       sections: {
         skills: 'Kỹ năng',
         workHistory: 'Kinh nghiệm làm việc',
@@ -148,30 +177,36 @@ export default {
           },
         },
         programming: {
+          levels: {
+            100: 'Thành thạo',
+            75: 'Có kinh nghiệm',
+            50: 'Khá',
+            25: 'Cơ bản',
+          },
           items: {
-            csharp: 'C# - Thành thạo',
-            typescript: 'TypeScript - Thành thạo',
-            cplusplus: 'C++ - Có kinh nghiệm',
-            visualbasic: 'VB - Có kinh nghiệm',
-            pascal: 'Pascal - Có kinh nghiệm',
-            python: 'Python - Cơ bản',
+            csharp: { name: 'C#' },
+            typescript: { name: 'TypeScript' },
+            cplusplus: { name: 'C++' },
+            visualbasic: { name: 'Visual Basic' },
+            delphi: { name: 'Pascal' },
+            python: { name: 'Python' },
           },
         },
         frameworks: {
           items: {
-            dotnet: '.NET - Thành thạo',
-            aras: 'Aras - Thành thạo',
-            nuxt: 'Nuxt - Thành thạo',
-            react: 'React - Khá',
-            winui: 'WinUI - Khá',
+            dotnet: '.NET',
+            aras: 'Aras',
+            nuxt: 'Nuxt',
+            react: 'React',
+            winui: 'WinUI',
           },
         },
         databases: {
           items: {
-            postgres: 'PostgreSQL - Có kinh nghiệm',
-            oracle: 'Oracle - Có kinh nghiệm',
-            sqlserver: 'SQL Server - Có kinh nghiệm',
-            sqlite: 'SQLite - Khá',
+            postgres: 'PostgreSQL',
+            oracle: 'Oracle',
+            sqlserver: 'SQL Server',
+            sqlite: 'SQLite',
           },
         },
         languages: {

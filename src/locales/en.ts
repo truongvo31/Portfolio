@@ -92,6 +92,35 @@ export default {
 
   client: {
     home: {
+      tableOfContents: {
+        title: 'Table of Contents',
+        ariaLabel: 'Table of contents',
+        introduction: 'Introduction',
+        skills: {
+          title: 'Skills',
+          programming: 'Programming Languages',
+          frameworks: 'Frameworks',
+          databases: 'Databases',
+          languages: 'Languages',
+        },
+        workHistory: {
+          title: 'Work Experience',
+          hitachi: 'Hitachi High-Tech',
+          fujitec: 'Fujitec',
+          usexpress: 'US Express',
+          hoangphuc: 'Hoang Phuc International',
+        },
+        education: {
+          title: 'Education',
+          tdtu: 'Ton Duc Thang University',
+          futaba: 'Futaba Japanese Language School',
+        },
+        projects: {
+          title: 'Projects',
+          portfolio: 'Portfolio Website',
+          pokedex: 'Pokedex',
+        },
+      },
       sections: {
         skills: 'Skills',
         workHistory: 'Work History',
@@ -148,30 +177,36 @@ export default {
           },
         },
         programming: {
+          levels: {
+            100: 'Proficient',
+            75: 'Experienced',
+            50: 'Intermediate',
+            25: 'Beginner',
+          },
           items: {
-            csharp: 'C# - Proficient',
-            typescript: 'TypeScript - Proficient',
-            cplusplus: 'C++ - Experienced',
-            visualbasic: 'VB - Experienced',
-            pascal: 'Pascal - Experienced',
-            python: 'Python - Beginner',
+            csharp: { name: 'C#' },
+            typescript: { name: 'TypeScript' },
+            cplusplus: { name: 'C++' },
+            visualbasic: { name: 'Visual Basic' },
+            delphi: { name: 'Pascal' },
+            python: { name: 'Python' },
           },
         },
         frameworks: {
           items: {
-            dotnet: '.NET - Proficient',
-            aras: 'Aras - Proficient',
-            nuxt: 'Nuxt - Proficient',
-            react: 'React - Intermediate',
-            winui: 'WinUI - Intermediate',
+            dotnet: '.NET',
+            aras: 'Aras',
+            nuxt: 'Nuxt',
+            react: 'React',
+            winui: 'WinUI',
           },
         },
         databases: {
           items: {
-            postgres: 'PostgreSQL - Experienced',
-            oracle: 'Oracle - Experienced',
-            sqlserver: 'SQL Server - Experienced',
-            sqlite: 'SQLite - Intermediate',
+            postgres: 'PostgreSQL',
+            oracle: 'Oracle',
+            sqlserver: 'SQL Server',
+            sqlite: 'SQLite',
           },
         },
         languages: {

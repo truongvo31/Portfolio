@@ -91,6 +91,35 @@ export default {
 
   client: {
     home: {
+      tableOfContents: {
+        title: '目次',
+        ariaLabel: '目次',
+        introduction: '自己紹介',
+        skills: {
+          title: 'スキル',
+          programming: 'プログラミング言語',
+          frameworks: 'フレームワーク',
+          databases: 'データベース',
+          languages: '言語',
+        },
+        workHistory: {
+          title: '職務経歴',
+          hitachi: '日立ハイテク',
+          fujitec: 'フジテック',
+          usexpress: 'US Express',
+          hoangphuc: 'Hoang Phuc International',
+        },
+        education: {
+          title: '学歴',
+          tdtu: 'トン・ドゥック・タング大学',
+          futaba: '双葉日本語学校',
+        },
+        projects: {
+          title: 'プロジェクト',
+          portfolio: 'ポートフォリオサイト',
+          pokedex: 'ポケモン図鑑',
+        },
+      },
       sections: {
         skills: 'スキル',
         workHistory: '職務経歴',
@@ -147,30 +176,36 @@ export default {
           },
         },
         programming: {
+          levels: {
+            100: '上級',
+            75: '実務経験あり',
+            50: '中級',
+            25: '初級',
+          },
           items: {
-            csharp: 'C# - 上級',
-            typescript: 'TypeScript - 上級',
-            cplusplus: 'C++ - 実務経験あり',
-            visualbasic: 'VB - 実務経験あり',
-            pascal: 'Pascal - 実務経験あり',
-            python: 'Python - 初級',
+            csharp: { name: 'C#' },
+            typescript: { name: 'TypeScript' },
+            cplusplus: { name: 'C++' },
+            visualbasic: { name: 'Visual Basic' },
+            delphi: { name: 'Pascal' },
+            python: { name: 'Python' },
           },
         },
         frameworks: {
           items: {
-            dotnet: '.NET - 上級',
-            aras: 'Aras - 上級',
-            nuxt: 'Nuxt - 上級',
-            react: 'React - 中級',
-            winui: 'WinUI - 中級',
+            dotnet: '.NET',
+            aras: 'Aras',
+            nuxt: 'Nuxt',
+            react: 'React',
+            winui: 'WinUI',
           },
         },
         databases: {
           items: {
-            postgres: 'PostgreSQL - 実務経験あり',
-            oracle: 'Oracle - 実務経験あり',
-            sqlserver: 'SQL Server - 実務経験あり',
-            sqlite: 'SQLite - 中級',
+            postgres: 'PostgreSQL',
+            oracle: 'Oracle',
+            sqlserver: 'SQL Server',
+            sqlite: 'SQLite',
           },
         },
         languages: {

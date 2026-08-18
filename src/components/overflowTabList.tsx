@@ -16,7 +16,6 @@ import {
   type MenuItemProps,
 } from '@fluentui/react-components';
 import { bundleIcon, MoreHorizontalFilled, MoreHorizontalRegular } from '@fluentui/react-icons';
-import { useState } from 'react';
 
 export type Tab = {
   id: string;
@@ -109,6 +108,7 @@ const OverflowTabs = ({
   minimumVisible = 2,
   menuCloseOnScroll = false,
   onTabSelected,
+  selectedId,
 }: {
   tabs: Tab[];
   orientation?: 'horizontal' | 'vertical';
@@ -116,12 +116,9 @@ const OverflowTabs = ({
   minimumVisible?: number;
   menuCloseOnScroll?: boolean;
   onTabSelected?: (tabId: string) => void;
+  selectedId?: string;
 }) => {
-  const [selectedTabId, setSelectedTabId] = useState<string | undefined>(tabs[0]?.id);
-  const onTabSelect = (tabId: string) => {
-    setSelectedTabId(tabId);
-    onTabSelected?.(tabId);
-  };
+  const selectedTabId = selectedId ?? tabs[0]?.id;
 
   return (
     <div className="flex flex-col gap-2">
@@ -133,7 +130,7 @@ const OverflowTabs = ({
           className={className}
           vertical={orientation === 'vertical'}
           selectedValue={selectedTabId}
-          onTabSelect={(_, d) => onTabSelect(d.value as string)}
+          onTabSelect={(_, d) => onTabSelected?.(d.value as string)}
         >
           {tabs.map((tab) => {
             return (
@@ -145,7 +142,7 @@ const OverflowTabs = ({
             );
           })}
           <OverflowMenu
-            onTabSelect={onTabSelect}
+            onTabSelect={onTabSelected}
             tabs={tabs}
             menuCloseOnScroll={menuCloseOnScroll}
           />
