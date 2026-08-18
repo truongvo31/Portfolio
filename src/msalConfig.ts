@@ -1,14 +1,15 @@
 import { LogLevel, type Configuration } from '@azure/msal-browser';
 
+const tenantId = import.meta.env.VITE_MSAL_TENANT_ID;
+const clientId = import.meta.env.VITE_MSAL_CLIENT_ID;
 const redirectUri = new URL(`${import.meta.env.BASE_URL}admin`, window.location.origin).toString();
-const authority = new URL(import.meta.env.VITE_MSAL_AUTHORITY, 'https://login.microsoftonline.com')
-  .href;
+const authority = new URL(tenantId, 'https://login.microsoftonline.com').href;
 
-export const msalScopes = [import.meta.env.VITE_MSAL_SCOPE];
+export const msalScopes = [`api://${clientId}/${import.meta.env.VITE_MSAL_SCOPE}`];
 
 export const msalConfig: Configuration = {
   auth: {
-    clientId: import.meta.env.VITE_MSAL_CLIENT_ID,
+    clientId,
     authority,
     redirectUri,
   },
