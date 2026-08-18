@@ -226,6 +226,7 @@ export default {
           label: 'Important:',
           text: 'All trademarks and logos are the property of their respective owners.',
         },
+        present: 'Present',
         card: {
           logoAlt: '{{company}} Logo',
           present: 'Present',

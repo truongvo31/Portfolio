@@ -224,6 +224,7 @@ export default {
           label: '重要:',
           text: 'すべての商標およびロゴは、それぞれの所有者に帰属します。',
         },
+        present: '現在',
         card: {
           logoAlt: '{{company}} のロゴ',
           present: '現在',

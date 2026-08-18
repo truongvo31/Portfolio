@@ -225,6 +225,7 @@ export default {
           label: 'Chú ý:',
           text: 'Tất cả thương hiệu và logo là tài sản của chủ sở hữu tương ứng.',
         },
+        present: 'Hiện tại',
         card: {
           logoAlt: 'Logo của {{company}}',
           present: 'Hiện tại',
