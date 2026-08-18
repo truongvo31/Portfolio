@@ -23,12 +23,6 @@ const createQueryString = (params?: GetConfig['params']): string => {
   return entries.length > 0 ? `?${new URLSearchParams(entries).toString()}` : '';
 };
 
-const joinURL = (base: string, path: string) => {
-  const b = base.replace(/\/+$/, '');
-  const p = path.replace(/^\/+/, '');
-  return `${b}/${p}`;
-};
-
 const safeParseBody = async <T,>(response: Response): Promise<T | string | null | undefined> => {
   if (response.status === 204 || response.status === 205) {
     return undefined;
@@ -112,7 +106,7 @@ const ApiProvider = ({ children }: { children: React.ReactNode }) => {
           baseURL = `${baseURL.replace(/\/+$/, '')}/api`;
         }
 
-        const fullURL = joinURL(baseURL, url);
+        const fullURL = new URL(url, baseURL).toString();
         const authorizationHeader = await getAuthorizationHeader(url);
 
         if (isProtectedEndpoint(url) && !authorizationHeader) {

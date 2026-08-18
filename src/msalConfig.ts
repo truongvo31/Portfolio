@@ -1,18 +1,19 @@
-import { LogLevel } from '@azure/msal-browser';
+import { LogLevel, type Configuration } from '@azure/msal-browser';
 
-const redirectUri = window.location.origin + `${import.meta.env.BASE_URL}admin`;
+const redirectUri = new URL(`${import.meta.env.BASE_URL}admin`, window.location.origin).toString();
+const authority = new URL(import.meta.env.VITE_MSAL_AUTHORITY, 'https://login.microsoftonline.com')
+  .href;
 
-export const msalScopes = ['api://80cfda38-39bf-4563-8741-5e3922e12a3f/access_as_user'];
+export const msalScopes = [import.meta.env.VITE_MSAL_SCOPE];
 
-export const msalConfig = {
+export const msalConfig: Configuration = {
   auth: {
-    clientId: '80cfda38-39bf-4563-8741-5e3922e12a3f',
-    authority: 'https://login.microsoftonline.com/bb784c60-5ceb-4153-a3d7-83ef0a33399d',
+    clientId: import.meta.env.VITE_MSAL_CLIENT_ID,
+    authority,
     redirectUri,
   },
   cache: {
     cacheLocation: 'sessionStorage',
-    storeAuthStateInCookie: false,
   },
   system: {
     loggerOptions: {
@@ -24,15 +25,15 @@ export const msalConfig = {
           case LogLevel.Error:
             console.error(message);
             return;
-          case LogLevel.Info:
-            console.info(message);
-            return;
-          case LogLevel.Verbose:
-            console.debug(message);
-            return;
-          case LogLevel.Warning:
-            console.warn(message);
-            return;
+          // case LogLevel.Info:
+          //   console.info(message);
+          //   return;
+          // case LogLevel.Verbose:
+          //   console.debug(message);
+          //   return;
+          // case LogLevel.Warning:
+          //   console.warn(message);
+          //   return;
           default:
             return;
         }

@@ -62,7 +62,7 @@ const AppSidebar = () => {
         name: 'Sessions',
         icon: <SessionIcon />,
         path: '/admin/sessions',
-        label: 'Sessions',
+        label: t('admin.layout.sidebar.navigation.sessions'),
       },
     ],
     // footer here
@@ -107,7 +107,7 @@ const AppSidebar = () => {
             icon={<Navigation24Regular />}
             appearance="transparent"
           />
-          <Text>Portfolio Admin</Text>
+          <Text>{t('admin.layout.sidebar.title')}</Text>
         </NavDrawerHeader>
       )}
       <NavDrawerBody className={'py-1! overflow-clip!'}>

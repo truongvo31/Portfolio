@@ -7,132 +7,217 @@ export default {
     loading: 'Loading application...',
   },
 
-  home: {
-    sections: {
-      skills: 'Skills',
-      workHistory: 'Work History',
-      education: 'Education',
-    },
-    education: {
-      labels: {
-        department: 'Dept',
-        field: 'Field',
-        degree: 'Degree',
-        duration: 'Duration',
-        present: 'Present',
-      },
-      items: {
-        futaba: {
-          school: 'Futaba Japanese School',
-          department: 'Japanese',
-          degree: 'JLPT N3',
-        },
-        tdtu: {
-          school: 'Ton Duc Thang University',
-          department: 'Faculty of Mathematics and Statistics',
-          field: 'Applied Mathematics',
-          degree: 'Bachelor of Science',
-          url: 'https://tdtu.edu.vn/',
+  admin: {
+    layout: {
+      sidebar: {
+        title: 'Portfolio Admin',
+        navigation: {
+          sessions: 'Sessions',
         },
       },
     },
-    introduction: {
-      heading: "Hello, I'm Phong Nguyen",
-      description:
-        "I'm a curious designer and developer based in Ibaraki, Japan. I love learning new things and exploring new technologies.",
-      cta: 'Feel free to check out my GitHub and Facebook profiles or send me an email below.',
-      social: {
-        github: 'GitHub',
-        facebook: 'Facebook',
-        email: 'Email',
+    page: {
+      sessions: {
+        pageTitle: 'Sessions',
+        description: 'Manage all sessions',
+        actions: {
+          createSession: 'Create Session',
+          deleteSessions: 'Delete Sessions',
+        },
+        table: {
+          ariaLabel: 'Sessions table',
+          columns: {
+            no: 'No.',
+            id: 'Session ID',
+            revoked: 'Revoked',
+            expiresAt: 'Expires At',
+            actions: 'Actions',
+          },
+          values: {
+            yes: 'Yes',
+            no: 'No',
+          },
+        },
+        dialog: {
+          title: {
+            create: 'Create Session',
+            edit: 'Edit Session',
+          },
+          labels: {
+            id: 'Session ID',
+            createdAt: 'Created At',
+            expiresAt: 'Expires At',
+            revoked: 'Revoked',
+            revokedAt: 'Revoked At',
+            span: 'Session Span',
+            spanUnit: 'Span Unit',
+            description: 'Session Description',
+          },
+          placeholders: {
+            span: 'Enter span',
+            description: 'Enter description',
+          },
+          units: {
+            hours: 'Hour',
+            days: 'Day',
+          },
+          buttons: {
+            submit: 'OK',
+            cancel: 'Cancel',
+          },
+        },
+        messages: {
+          fetchFailed: 'Failed to fetch sessions',
+          updateSuccess: 'Session updated successfully',
+          deleteTitle: 'Delete Sessions',
+          deleteBody:
+            'This action will delete all revoked and expired sessions. Are you sure you want to proceed?',
+          deleteEmptyTitle: 'No sessions to delete',
+          deleteEmptyBody: 'There are no revoked or expired sessions to delete.',
+          deleteFailed: 'Failed to delete sessions',
+          deleteSuccess: 'Sessions deleted successfully',
+          sessionNotFoundTitle: 'Session not found',
+          sessionNotFoundBody: 'No session found with ID: {{id}}',
+          invalidTitle: 'Session is invalid',
+          invalidBody: 'The session is either revoked or expired.',
+          clipboardSuccess: 'Session URL copied to clipboard',
+          invalidInputTitle: 'Invalid input',
+          invalidInputBody: 'Timespan must be greater than 0',
+          submitErrorTitle: 'Submit error',
+          submitErrorBody: 'Failed to submit session',
+        },
       },
-      avatarAlt: 'Portrait of Phong Nguyen',
     },
-    skills: {
-      tabs: {
+  },
+
+  client: {
+    home: {
+      sections: {
+        skills: 'Skills',
+        workHistory: 'Work History',
+        education: 'Education',
+      },
+      education: {
+        labels: {
+          department: 'Dept',
+          field: 'Field',
+          degree: 'Degree',
+          duration: 'Duration',
+          present: 'Present',
+        },
+        items: {
+          futaba: {
+            school: 'Futaba Japanese School',
+            department: 'Japanese',
+            degree: 'JLPT N3',
+          },
+          tdtu: {
+            school: 'Ton Duc Thang University',
+            department: 'Faculty of Mathematics and Statistics',
+            field: 'Applied Mathematics',
+            degree: 'Bachelor of Science',
+            url: 'https://tdtu.edu.vn/',
+          },
+        },
+      },
+      introduction: {
+        heading: "Hello, I'm Phong Nguyen",
+        description:
+          "I'm a curious designer and developer based in Ibaraki, Japan. I love learning new things and exploring new technologies.",
+        cta: 'Feel free to check out my GitHub and Facebook profiles or send me an email below.',
+        social: {
+          github: 'GitHub',
+          facebook: 'Facebook',
+          email: 'Email',
+        },
+        avatarAlt: 'Portrait of Phong Nguyen',
+      },
+      skills: {
+        tabs: {
+          programming: {
+            name: 'Programming',
+          },
+          frameworks: {
+            name: 'Frameworks',
+          },
+          databases: {
+            name: 'Databases',
+          },
+          languages: {
+            name: 'Languages',
+          },
+        },
         programming: {
-          name: 'Programming',
+          items: {
+            csharp: 'C# - Proficient',
+            typescript: 'TypeScript - Proficient',
+            cplusplus: 'C++ - Experienced',
+            visualbasic: 'VB - Experienced',
+            pascal: 'Pascal - Experienced',
+            python: 'Python - Beginner',
+          },
         },
         frameworks: {
-          name: 'Frameworks',
+          items: {
+            dotnet: '.NET - Proficient',
+            aras: 'Aras - Proficient',
+            nuxt: 'Nuxt - Proficient',
+            react: 'React - Intermediate',
+            winui: 'WinUI - Intermediate',
+          },
         },
         databases: {
-          name: 'Databases',
+          items: {
+            postgres: 'PostgreSQL - Experienced',
+            oracle: 'Oracle - Experienced',
+            sqlserver: 'SQL Server - Experienced',
+            sqlite: 'SQLite - Intermediate',
+          },
         },
         languages: {
-          name: 'Languages',
+          items: {
+            vietnamese: 'Vietnamese - Native',
+            english: 'English - TOEIC 770',
+            japanese: 'Japanese - JLPT N3',
+          },
         },
       },
-      programming: {
+      workHistory: {
+        warning: {
+          multipleCurrent:
+            'There are multiple current work history items. Only the first one will be displayed.',
+        },
+        disclaimer: {
+          label: 'Important:',
+          text: 'All trademarks and logos are the property of their respective owners.',
+        },
+        card: {
+          logoAlt: '{{company}} Logo',
+          present: 'Present',
+        },
         items: {
-          csharp: 'C# - Proficient',
-          typescript: 'TypeScript - Proficient',
-          cplusplus: 'C++ - Experienced',
-          visualbasic: 'VB - Experienced',
-          pascal: 'Pascal - Experienced',
-          python: 'Python - Beginner',
-        },
-      },
-      frameworks: {
-        items: {
-          dotnet: '.NET - Proficient',
-          aras: 'Aras - Proficient',
-          nuxt: 'Nuxt - Proficient',
-          react: 'React - Intermediate',
-          winui: 'WinUI - Intermediate',
-        },
-      },
-      databases: {
-        items: {
-          postgres: 'PostgreSQL - Experienced',
-          oracle: 'Oracle - Experienced',
-          sqlserver: 'SQL Server - Experienced',
-          sqlite: 'SQLite - Intermediate',
-        },
-      },
-      languages: {
-        items: {
-          vietnamese: 'Vietnamese - Native',
-          english: 'English - TOEIC 770',
-          japanese: 'Japanese - JLPT N3',
-        },
-      },
-    },
-    workHistory: {
-      warning: {
-        multipleCurrent:
-          'There are multiple current work history items. Only the first one will be displayed.',
-      },
-      disclaimer: {
-        label: 'Important:',
-        text: 'All trademarks and logos are the property of their respective owners.',
-      },
-      card: {
-        logoAlt: '{{company}} Logo',
-        present: 'Present',
-      },
-      items: {
-        hitachi: {
-          company: 'Hitachi High-Tech',
-          position: 'Software Engineer',
-          description:
-            'Worked on projects involving software development and system integration, with a strong focus on Aras Innovator development.',
-        },
-        fujitec: {
-          company: 'Fujitec',
-          position: 'Software Engineer',
-          description:
-            'Worked on software development and system integration projects, mainly focused on PLM system development and maintenance using Nuxt and .NET.',
-        },
-        usexpress: {
-          company: 'US Express',
-          position: 'Full Stack Developer',
-          description: "Developed and maintained web applications for the company's customers.",
-        },
-        hoangphuc: {
-          company: 'Hoang Phuc International',
-          position: 'Web Administrator',
-          description: 'Managed the company website and web-related administrative tasks.',
+          hitachi: {
+            company: 'Hitachi High-Tech',
+            position: 'Software Engineer',
+            description:
+              'Worked on projects involving software development and system integration, with a strong focus on Aras Innovator development.',
+          },
+          fujitec: {
+            company: 'Fujitec',
+            position: 'Software Engineer',
+            description:
+              'Worked on software development and system integration projects, mainly focused on PLM system development and maintenance using Nuxt and .NET.',
+          },
+          usexpress: {
+            company: 'US Express',
+            position: 'Full Stack Developer',
+            description: "Developed and maintained web applications for the company's customers.",
+          },
+          hoangphuc: {
+            company: 'Hoang Phuc International',
+            position: 'Web Administrator',
+            description: 'Managed the company website and web-related administrative tasks.',
+          },
         },
       },
     },

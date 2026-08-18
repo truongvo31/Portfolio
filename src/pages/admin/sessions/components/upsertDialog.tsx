@@ -13,6 +13,7 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { utcToLocalTime } from '../../../../helpers/dateTimeHelper';
 import useApi from '../../../../stores/useApi';
 import useAsyncDialog from '../../../../stores/useAsyncDialog';
@@ -25,6 +26,7 @@ type UpsertDialogProps = {
 };
 
 const UpsertDialog = ({ model }: UpsertDialogProps) => {
+  const { t } = useTranslation();
   const { resolve, isOpen } = useAsyncDialog();
   const { $error } = useToaster();
   const { $post, $patch } = useApi();
@@ -35,14 +37,19 @@ const UpsertDialog = ({ model }: UpsertDialogProps) => {
   const [description, setDescription] = useState(model?.description ?? '');
   const [isRevoked, setIsRevoked] = useState(model?.isRevoked ?? false);
 
-  const title = model ? 'Edit Session' : 'Create Session';
+  const title = model
+    ? t('admin.page.sessions.dialog.title.edit')
+    : t('admin.page.sessions.dialog.title.create');
 
   const isEdit = Boolean(model);
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (timespan <= 0) {
-      $error('Invalid input', 'Timespan must be greater than 0');
+      $error(
+        t('admin.page.sessions.messages.invalidInputTitle'),
+        t('admin.page.sessions.messages.invalidInputBody'),
+      );
       return;
     }
     try {
@@ -54,18 +61,21 @@ const UpsertDialog = ({ model }: UpsertDialogProps) => {
           description,
         };
         const { error, message } = await $post('admin/create-session', payload);
-        if (error) throw new Error(message || 'Failed to submit session');
+        if (error) throw new Error(message || t('admin.page.sessions.messages.submitErrorBody'));
       } else {
         const payload = {
           isRevoked,
           description,
         };
         const { error, message } = await $patch(`admin/update-session/${model?.id}`, payload);
-        if (error) throw new Error(message || 'Failed to submit session');
+        if (error) throw new Error(message || t('admin.page.sessions.messages.submitErrorBody'));
       }
       void resolve(true);
     } catch (error) {
-      $error('Submit error', error instanceof Error ? error.message : 'Failed to submit session');
+      $error(
+        t('admin.page.sessions.messages.submitErrorTitle'),
+        error instanceof Error ? error.message : t('admin.page.sessions.messages.submitErrorBody'),
+      );
     } finally {
       setLoading(false);
     }
@@ -93,50 +103,76 @@ const UpsertDialog = ({ model }: UpsertDialogProps) => {
             <DialogContent className="p-3! grid grid-cols-1 md:grid-cols-4 gap-2 items-center justify-center">
               {isEdit ? (
                 <>
-                  <Field className="col-span-full" label="Session ID">
+                  <Field
+                    className="col-span-full"
+                    label={t('admin.page.sessions.dialog.labels.id')}
+                  >
                     <Input value={model?.id ?? ''} readOnly />
                   </Field>
-                  <Field className="col-span-2" label="Created At">
+                  <Field
+                    className="col-span-2"
+                    label={t('admin.page.sessions.dialog.labels.createdAt')}
+                  >
                     <Input value={utcToLocalTime(model?.createdAtUtc ?? '')} readOnly />
                   </Field>
-                  <Field className="col-span-2" label="Expires At">
+                  <Field
+                    className="col-span-2"
+                    label={t('admin.page.sessions.dialog.labels.expiresAt')}
+                  >
                     <Input value={utcToLocalTime(model?.expiresAtUtc ?? '')} readOnly />
                   </Field>
-                  <Field className="col-span-2" label="Revoked" orientation="horizontal">
+                  <Field
+                    className="col-span-2"
+                    label={t('admin.page.sessions.dialog.labels.revoked')}
+                    orientation="horizontal"
+                  >
                     <Checkbox
                       checked={isRevoked}
                       onChange={(e) => setIsRevoked(e.target.checked)}
                     />
                   </Field>
-                  <Field className="col-span-2" label="Revoked At">
+                  <Field
+                    className="col-span-2"
+                    label={t('admin.page.sessions.dialog.labels.revokedAt')}
+                  >
                     <Input value={utcToLocalTime(model?.revokedAtUtc ?? '')} readOnly />
                   </Field>
                 </>
               ) : (
                 <>
-                  <Field className="col-span-2" label="Session Span" required>
+                  <Field
+                    className="col-span-2"
+                    label={t('admin.page.sessions.dialog.labels.span')}
+                    required
+                  >
                     <Input
                       type="number"
-                      placeholder="Enter span"
+                      placeholder={t('admin.page.sessions.dialog.placeholders.span')}
                       value={String(timespan ?? '')}
                       onChange={(e) => setTimespan(Number(e.target.value))}
                     />
                   </Field>
-                  <Field className="col-span-2" label="Span Unit">
+                  <Field
+                    className="col-span-2"
+                    label={t('admin.page.sessions.dialog.labels.spanUnit')}
+                  >
                     <Select
                       value={spanUnit}
                       onChange={(e) => setSpanUnit(e.target.value as 'hours' | 'days')}
                     >
-                      <option value="hours">Hour</option>
-                      <option value="days">Day</option>
+                      <option value="hours">{t('admin.page.sessions.dialog.units.hours')}</option>
+                      <option value="days">{t('admin.page.sessions.dialog.units.days')}</option>
                     </Select>
                   </Field>
                 </>
               )}
-              <Field className="col-span-full" label="Session Description">
+              <Field
+                className="col-span-full"
+                label={t('admin.page.sessions.dialog.labels.description')}
+              >
                 <Input
                   type="text"
-                  placeholder="Enter description"
+                  placeholder={t('admin.page.sessions.dialog.placeholders.description')}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
@@ -144,10 +180,10 @@ const UpsertDialog = ({ model }: UpsertDialogProps) => {
             </DialogContent>
             <DialogActions fluid className="p-3!">
               <Button appearance="primary" type="submit">
-                OK
+                {t('admin.page.sessions.dialog.buttons.submit')}
               </Button>
               <Button appearance="secondary" onClick={() => void resolve(false)}>
-                Cancel
+                {t('admin.page.sessions.dialog.buttons.cancel')}
               </Button>
             </DialogActions>
           </DialogBody>

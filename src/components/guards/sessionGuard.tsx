@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
-import api from '../../helpers/apiHelper';
+import useApi from '../../stores/useApi';
 
 type SessionGuardProps = {
   children?: ReactNode;
@@ -14,6 +14,7 @@ type SessionGuardProps = {
 const SessionGuard = ({ children, fallback }: SessionGuardProps) => {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
+  const { $get } = useApi();
   const sessionToken = searchParams.get('session');
   const [isSessionValid, setIsSessionValid] = useState(false);
 
@@ -23,7 +24,7 @@ const SessionGuard = ({ children, fallback }: SessionGuardProps) => {
       if (!sessionToken) {
         return false;
       }
-      const { data: isAllowed, error } = await api.$get<boolean>(
+      const { data: isAllowed, error } = await $get<boolean>(
         `client/validate-session/${sessionToken}`,
       );
       if (error) {
