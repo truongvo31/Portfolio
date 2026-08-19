@@ -5,11 +5,14 @@ import Avatar from '../../../assets/icons/avatar.svg';
 import FacebookIcon from '../../../assets/icons/facebook';
 import GithubIcon from '../../../assets/icons/github';
 
-const Introduction = () => {
+const Introduction = ({ id }: { id: string }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="py-4 pt-8 grid grid-cols-1 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-2">
+    <div
+      id={id}
+      className="py-4 pt-8 grid grid-cols-1 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-2"
+    >
       <div className="order-2 md:order-1 flex flex-col gap-4 justify-between">
         <Text as="h3" weight="semibold" size={600}>
           {t('client.home.introduction.heading')}

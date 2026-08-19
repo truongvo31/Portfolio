@@ -124,7 +124,7 @@ export default {
       sections: {
         skills: 'Kỹ năng',
         workHistory: 'Kinh nghiệm làm việc',
-        education: 'Học vấn',
+        educations: 'Học vấn',
       },
       education: {
         labels: {
@@ -234,24 +234,18 @@ export default {
           hitachi: {
             company: 'Hitachi High-Tech',
             position: 'Kỹ sư phần mềm',
-            description:
-              'Tham gia các dự án phát triển phần mềm và tích hợp hệ thống, đặc biệt tập trung vào phát triển Aras Innovator.',
           },
           fujitec: {
             company: 'Fujitec',
             position: 'Kỹ sư phần mềm',
-            description:
-              'Tham gia các dự án phát triển phần mềm và tích hợp hệ thống, chủ yếu tập trung vào phát triển và bảo trì hệ thống PLM bằng Nuxt và .NET.',
           },
           usexpress: {
             company: 'US Express',
             position: 'Lập trình viên Full Stack',
-            description: 'Phát triển và bảo trì các ứng dụng web phục vụ khách hàng của công ty.',
           },
           hoangphuc: {
             company: 'Hoang Phuc International',
             position: 'Quản trị viên Web',
-            description: 'Quản lý website công ty và các công việc quản trị liên quan đến web.',
           },
         },
       },

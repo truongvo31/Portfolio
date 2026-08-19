@@ -23,11 +23,12 @@ const DatabaseIcon = bundleIcon(Database24Filled, Database24Regular);
 const LocalLanguageIcon = bundleIcon(LocalLanguage24Filled, LocalLanguage24Regular);
 
 type SkillsProps = {
+  id: string;
   selectedTabId?: string;
   onTabSelected?: (tabId: string) => void;
 };
 
-const Skills = ({ selectedTabId, onTabSelected }: SkillsProps) => {
+const Skills = ({ id, selectedTabId, onTabSelected }: SkillsProps) => {
   const { t } = useTranslation();
 
   const tabs: Tab[] = [
@@ -58,7 +59,7 @@ const Skills = ({ selectedTabId, onTabSelected }: SkillsProps) => {
   ];
 
   return (
-    <div className="pt-2 pb-4">
+    <div id={id} className="pt-2 pb-4">
       <OverflowTabs
         tabs={tabs}
         orientation="horizontal"

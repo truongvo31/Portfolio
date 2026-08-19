@@ -34,18 +34,22 @@ type NavItem = {
 const SessionIcon = bundleIcon(TaskListSquareDatabase24Filled, TaskListSquareDatabase24Regular);
 const SettingsIcon = bundleIcon(Settings20Filled, Settings20Regular);
 
-const isMobile = () => window.innerWidth < 768;
-
 const useFluentStyles = makeStyles({
   drawer: {
-    backgroundColor: isMobile() ? 'inherit' : 'transparent',
+    backgroundColor: 'inherit',
     borderRight: `1px solid ${tokens.colorNeutralStroke2}`,
+    '@media (min-width: 768px)': {
+      backgroundColor: 'transparent',
+    },
   },
   drawerFooter: {
     padding: `0 ${tokens.spacingHorizontalXS} 0 ${tokens.spacingHorizontalMNudge}`,
   },
   navItem: {
-    backgroundColor: isMobile() ? 'inherit' : 'transparent',
+    backgroundColor: 'inherit',
+    '@media (min-width: 768px)': {
+      backgroundColor: 'transparent',
+    },
   },
 });
 

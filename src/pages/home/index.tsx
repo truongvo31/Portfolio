@@ -9,6 +9,7 @@ import {
 import { AppsListRegular } from '@fluentui/react-icons';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import Educations from './components/educations';
 import Introduction from './components/introduction';
 import Skills from './components/skills';
 import WorkHistory from './components/works';
@@ -160,19 +161,25 @@ const HomePage = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2 h-fit">
-        <Introduction />
+        <Introduction id="introduction" />
 
         <Divider alignContent="start" appearance="subtle">
           <p className="text-xl font-semibold">{t('client.home.sections.skills')}</p>
         </Divider>
 
-        <Skills selectedTabId={selectedSkillTab} onTabSelected={setSelectedSkillTab} />
+        <Skills id="skills" selectedTabId={selectedSkillTab} onTabSelected={setSelectedSkillTab} />
 
         <Divider alignContent="start" appearance="subtle">
           <p className="text-xl font-semibold">{t('client.home.sections.workHistory')}</p>
         </Divider>
 
-        <WorkHistory selectedTabId={selectedWorkTab} onTabSelected={setSelectedWorkTab} />
+        <WorkHistory id="work" selectedTabId={selectedWorkTab} onTabSelected={setSelectedWorkTab} />
+
+        <Divider alignContent="start" appearance="subtle">
+          <p className="text-xl font-semibold">{t('client.home.sections.educations')}</p>
+        </Divider>
+
+        <Educations id="education" />
       </div>
     </div>
   );

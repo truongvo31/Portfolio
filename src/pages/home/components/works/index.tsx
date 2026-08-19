@@ -27,6 +27,7 @@ import HoangPhucLogo from '../../../../assets/images/hoangphuc.webp';
 import WorkDescription from './workDescription';
 
 interface WorkHistoryProps {
+  id: string;
   selectedTabId: string | undefined;
   onTabSelected: (tabId: string) => void;
 }
@@ -53,7 +54,7 @@ const useStyles = makeStyles({
   },
 });
 
-const WorkHistory = ({ selectedTabId, onTabSelected }: WorkHistoryProps) => {
+const WorkHistory = ({ id, selectedTabId, onTabSelected }: WorkHistoryProps & { id: string }) => {
   const { t } = useTranslation();
   const styles = useStyles();
 
@@ -134,13 +135,14 @@ const WorkHistory = ({ selectedTabId, onTabSelected }: WorkHistoryProps) => {
 
   return (
     works && (
-      <Accordion onToggle={handleToggle} openItems={selectedTabId ? selectedTabId : works[0].id}>
+      <Accordion
+        id={id}
+        onToggle={handleToggle}
+        openItems={selectedTabId ? selectedTabId : works[0].id}
+      >
         {works.map((work) => (
           <AccordionItem key={work.id} value={work.id}>
             <AccordionHeader>
-              {/* {work.startDate} -{' '}
-              {work.endDate ? work.endDate : t('client.home.workHistory.present')} | {work.company}{' '}
-              | {work.position} */}
               <CardHeader
                 className="w-full"
                 action={

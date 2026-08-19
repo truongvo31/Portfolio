@@ -123,7 +123,7 @@ export default {
       sections: {
         skills: 'スキル',
         workHistory: '職務経歴',
-        education: '学歴',
+        educations: '学歴',
       },
       education: {
         labels: {
@@ -233,24 +233,18 @@ export default {
           hitachi: {
             company: '日立ハイテク',
             position: 'ソフトウェアエンジニア',
-            description:
-              'ソフトウェア開発とシステム統合に関わるプロジェクトに従事し、特に Aras Innovator 開発に注力しました。',
           },
           fujitec: {
             company: 'フジテック',
             position: 'ソフトウェアエンジニア',
-            description:
-              'ソフトウェア開発とシステム統合のプロジェクトに従事し、主に Nuxt と .NET を用いた PLM システムの開発・保守を担当しました。',
           },
           usexpress: {
             company: 'US Express',
             position: 'フルスタック開発者',
-            description: '顧客向け Web アプリケーションの開発と保守を担当しました。',
           },
           hoangphuc: {
             company: 'Hoang Phuc International',
             position: 'Web 管理者',
-            description: '企業サイトの運用および Web 関連の管理業務を担当しました。',
           },
         },
       },

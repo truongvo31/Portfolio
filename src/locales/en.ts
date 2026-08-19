@@ -124,7 +124,7 @@ export default {
       sections: {
         skills: 'Skills',
         workHistory: 'Work History',
-        education: 'Education',
+        educations: 'Educations',
       },
       education: {
         labels: {
@@ -235,24 +235,18 @@ export default {
           hitachi: {
             company: 'Hitachi High-Tech',
             position: 'Software Engineer',
-            description:
-              'Worked on projects involving software development and system integration, with a strong focus on Aras Innovator development.',
           },
           fujitec: {
             company: 'Fujitec',
             position: 'Software Engineer',
-            description:
-              'Worked on software development and system integration projects, mainly focused on PLM system development and maintenance using Nuxt and .NET.',
           },
           usexpress: {
             company: 'US Express',
             position: 'Full Stack Developer',
-            description: "Developed and maintained web applications for the company's customers.",
           },
           hoangphuc: {
             company: 'Hoang Phuc International',
             position: 'Web Administrator',
-            description: 'Managed the company website and web-related administrative tasks.',
           },
         },
       },
