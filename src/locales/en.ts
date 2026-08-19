@@ -117,7 +117,7 @@ export default {
         },
         projects: {
           title: 'Projects',
-          portfolio: 'Portfolio Website',
+          portfolio: 'Portfolio',
           pokedex: 'Pokedex',
         },
       },

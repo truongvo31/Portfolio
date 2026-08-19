@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Educations from './components/educations';
 import Introduction from './components/introduction';
+import Projects from './components/projects';
 import Skills from './components/skills';
 import WorkHistory from './components/works';
 import type { TocItem } from './types';
@@ -38,6 +39,7 @@ const HomePage = () => {
   const { t } = useTranslation();
   const [selectedSkillTab, setSelectedSkillTab] = useState<string | undefined>(undefined);
   const [selectedWorkTab, setSelectedWorkTab] = useState<string | undefined>(undefined);
+  const [selectedProjectTab, setSelectedProjectTab] = useState<string | undefined>(undefined);
 
   const tocItems: TocItem[] = [
     { id: 'introduction', label: t('client.home.tableOfContents.introduction') },
@@ -112,6 +114,9 @@ const HomePage = () => {
       case 'work':
         setSelectedWorkTab(childId);
         break;
+      case 'projects':
+        setSelectedProjectTab(childId);
+        break;
       default:
         break;
     }
@@ -180,6 +185,16 @@ const HomePage = () => {
         </Divider>
 
         <Educations id="education" />
+
+        <Divider alignContent="start" appearance="subtle">
+          <p className="text-xl font-semibold">{t('client.home.tableOfContents.projects.title')}</p>
+        </Divider>
+
+        <Projects
+          id="projects"
+          selectedTabId={selectedProjectTab}
+          onTabSelected={setSelectedProjectTab}
+        />
       </div>
     </div>
   );

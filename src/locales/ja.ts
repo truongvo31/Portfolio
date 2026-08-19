@@ -116,7 +116,7 @@ export default {
         },
         projects: {
           title: 'プロジェクト',
-          portfolio: 'ポートフォリオサイト',
+          portfolio: 'ポートフォリオ',
           pokedex: 'ポケモン図鑑',
         },
       },

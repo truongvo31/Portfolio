@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import MermaidDiagram from '../../../../components/mermaidDiagram';
 import useGlobalState from '../../../../stores/useGlobalState';
 
 const markdownModules = import.meta.glob('./descriptions/**/*.md', {
@@ -93,6 +94,17 @@ const WorkDescription = ({ workId }: { workId: string }) => {
           </ol>
         ),
         li: ({ children }) => <li style={{ margin: '0.2rem 0', lineHeight: 1.6 }}>{children}</li>,
+        code: ({ className, children, ...props }) => {
+          const isMermaid = /language-mermaid/.test(className ?? '');
+          if (isMermaid) {
+            return <MermaidDiagram chart={String(children).trim()} />;
+          }
+          return (
+            <code className={className} {...props}>
+              {children}
+            </code>
+          );
+        },
       }}
     >
       {content}

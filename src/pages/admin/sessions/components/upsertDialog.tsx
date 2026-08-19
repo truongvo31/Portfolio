@@ -10,6 +10,7 @@ import {
   Field,
   Input,
   Select,
+  makeStyles,
   tokens,
 } from '@fluentui/react-components';
 import { useState } from 'react';
@@ -25,12 +26,21 @@ type UpsertDialogProps = {
   model?: Session;
 };
 
+const useStyles = makeStyles({
+  dialogSurface: {
+    zIndex: tokens.zIndexPopup,
+    width: 'fit-content',
+    padding: '0',
+  },
+});
+
 const UpsertDialog = ({ model }: UpsertDialogProps) => {
   const { t } = useTranslation();
   const { resolve, isOpen } = useAsyncDialog();
   const { $error } = useToaster();
   const { $post, $patch } = useApi();
   const { setLoading } = useLoading();
+  const styles = useStyles();
 
   const [timespan, setTimespan] = useState(1);
   const [spanUnit, setSpanUnit] = useState<'hours' | 'days'>('hours');
@@ -92,7 +102,7 @@ const UpsertDialog = ({ model }: UpsertDialogProps) => {
     >
       <DialogSurface
         style={{ zIndex: tokens.zIndexPopup }}
-        className={'p-0! w-fit min-w-100'}
+        className={styles.dialogSurface}
         mountNode={document.getElementById('root-fluent-provider') ?? undefined}
       >
         <form onSubmit={handleSubmit}>
@@ -121,16 +131,12 @@ const UpsertDialog = ({ model }: UpsertDialogProps) => {
                   >
                     <Input value={utcToLocalTime(model?.expiresAtUtc ?? '')} readOnly />
                   </Field>
-                  <Field
+                  <Checkbox
                     className="col-span-2"
+                    checked={isRevoked}
                     label={t('admin.page.sessions.dialog.labels.revoked')}
-                    orientation="horizontal"
-                  >
-                    <Checkbox
-                      checked={isRevoked}
-                      onChange={(e) => setIsRevoked(e.target.checked)}
-                    />
-                  </Field>
+                    onChange={(e) => setIsRevoked(e.target.checked)}
+                  />
                   <Field
                     className="col-span-2"
                     label={t('admin.page.sessions.dialog.labels.revokedAt')}

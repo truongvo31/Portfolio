@@ -32,10 +32,6 @@ const SkillGrid = ({ skills }: { skills: SkillGridProps[] }) => {
                 <ProgressBar value={skill.level / 100} color={calcProgressBarColor(skill.level)} />
               </Field>
             }
-            description={
-              // <Caption1>{t(`client.home.skills.programming.levels.${skill.level}`)}</Caption1>
-              null
-            }
           />
         </Card>
       ))}
