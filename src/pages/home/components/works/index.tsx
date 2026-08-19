@@ -2,17 +2,29 @@ import {
   Accordion,
   AccordionHeader,
   AccordionItem,
+  AccordionPanel,
+  Caption1,
+  Card,
   CardHeader,
+  CardPreview,
+  Image,
   makeStyles,
   tokens,
   type AccordionToggleEventHandler,
 } from '@fluentui/react-components';
-import { CheckmarkCircle20Filled, History20Regular } from '@fluentui/react-icons';
+import {
+  Building48Regular,
+  CheckmarkCircle20Filled,
+  History20Regular,
+} from '@fluentui/react-icons';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import FujitecLogo from '../../../../assets/images/fujitec.png';
+import JapanIcon from '../../../../assets/icons/japan';
+import VietnamIcon from '../../../../assets/icons/vietnam';
+import FujitecLogo from '../../../../assets/images/fujitec.webp';
 import HitachiLogo from '../../../../assets/images/hitachi.webp';
 import HoangPhucLogo from '../../../../assets/images/hoangphuc.webp';
+import WorkDescription from './workDescription';
 
 interface WorkHistoryProps {
   selectedTabId: string | undefined;
@@ -22,6 +34,22 @@ interface WorkHistoryProps {
 const useStyles = makeStyles({
   present: {
     color: tokens.colorPaletteGreenForeground1,
+  },
+  cardPreview: {
+    height: '100px',
+    padding: tokens.spacingHorizontalL,
+    backgroundColor: tokens.colorNeutralForegroundStaticInverted,
+    // border: `1px solid ${tokens.colorNeutralStroke1}`,
+    '@media (min-width: 768px)': {
+      height: '250px',
+    },
+  },
+  noCompanyLogo: {
+    color: '#000',
+  },
+  workDescription: {
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 
@@ -36,7 +64,7 @@ const WorkHistory = ({ selectedTabId, onTabSelected }: WorkHistoryProps) => {
       isCurrent: true,
       position: t('client.home.workHistory.items.hitachi.position'),
       startDate: '2025-10-08',
-      description: t('client.home.workHistory.items.hitachi.description'),
+      description: <WorkDescription workId="hitachi" />,
       companyUrl: 'https://www.hitachi-hightech.com/global/en/',
       companyLogo: HitachiLogo,
       location: 'japan',
@@ -48,7 +76,7 @@ const WorkHistory = ({ selectedTabId, onTabSelected }: WorkHistoryProps) => {
       position: t('client.home.workHistory.items.fujitec.position'),
       startDate: '2023-08-01',
       endDate: '2025-09-30',
-      description: t('client.home.workHistory.items.fujitec.description'),
+      description: <WorkDescription workId="fujitec" />,
       companyUrl: 'https://www.fujitec.com/',
       companyLogo: FujitecLogo,
       location: 'japan',
@@ -60,7 +88,7 @@ const WorkHistory = ({ selectedTabId, onTabSelected }: WorkHistoryProps) => {
       position: t('client.home.workHistory.items.usexpress.position'),
       startDate: '2020-08-01',
       endDate: '2020-10-25',
-      description: t('client.home.workHistory.items.usexpress.description'),
+      description: <WorkDescription workId="usexpress" />,
       companyUrl: undefined,
       location: 'vietnam',
     },
@@ -71,7 +99,7 @@ const WorkHistory = ({ selectedTabId, onTabSelected }: WorkHistoryProps) => {
       position: t('client.home.workHistory.items.hoangphuc.position'),
       startDate: '2018-06-01',
       endDate: '2020-06-30',
-      description: t('client.home.workHistory.items.hoangphuc.description'),
+      description: <WorkDescription workId="hoangphuc" />,
       companyUrl: 'https://hoangphuconline.vn/',
       companyLogo: HoangPhucLogo,
       location: 'vietnam',
@@ -125,6 +153,36 @@ const WorkHistory = ({ selectedTabId, onTabSelected }: WorkHistoryProps) => {
                 header={`${work.startDate} - ${work.endDate ? work.endDate : t('client.home.workHistory.present')}`}
               />
             </AccordionHeader>
+            <AccordionPanel>
+              <Card appearance="outline">
+                <CardHeader
+                  header={<p className="text-lg font-semibold">{work.company}</p>}
+                  description={<Caption1>{work.position}</Caption1>}
+                  action={
+                    work.location === 'japan' ? (
+                      <JapanIcon size="2rem" />
+                    ) : (
+                      <VietnamIcon size="2rem" />
+                    )
+                  }
+                />
+                <CardPreview className={styles.cardPreview}>
+                  {work.companyLogo ? (
+                    <Image
+                      src={work.companyLogo}
+                      alt={`${work.company} logo`}
+                      loading="lazy"
+                      fit="contain"
+                    />
+                  ) : (
+                    <Building48Regular className={styles.noCompanyLogo} />
+                  )}
+                </CardPreview>
+                <div className={styles.workDescription}>
+                  <WorkDescription workId={work.id} />
+                </div>
+              </Card>
+            </AccordionPanel>
           </AccordionItem>
         ))}
       </Accordion>
