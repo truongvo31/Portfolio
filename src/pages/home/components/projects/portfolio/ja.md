@@ -50,4 +50,8 @@ flowchart LR
 
 #### Github リポジトリ
 
-[github.com/truongvo31/Portfolio](https://github.com/truongvo31/Portfolio)
+[https://github.com/truongvo31/Portfolio](https://github.com/truongvo31/Portfolio)
+
+#### ライブプレビュー
+
+このページ自体

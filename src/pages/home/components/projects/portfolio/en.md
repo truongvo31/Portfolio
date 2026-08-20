@@ -50,4 +50,8 @@ flowchart LR
 
 #### Github repo
 
-[github.com/truongvo31/Portfolio](https://github.com/truongvo31/Portfolio)
+[https://github.com/truongvo31/Portfolio](https://github.com/truongvo31/Portfolio)
+
+#### Live preview
+
+This page itself

@@ -1,6 +1,7 @@
 import { makeStyles, tokens } from '@fluentui/react-components';
 import mermaid from 'mermaid';
 import { useEffect, useId, useRef, useState } from 'react';
+import useGlobalState from '../stores/useGlobalState';
 import { useSystemTheme } from '../stores/useSystemTheme';
 
 const useStyles = makeStyles({
@@ -16,16 +17,19 @@ const useStyles = makeStyles({
 const MermaidDiagram = ({ chart }: { chart: string }) => {
   const styles = useStyles();
   const id = useId().replace(/:/g, '');
+  const { theme } = useGlobalState();
   const systemTheme = useSystemTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>('');
+
+  const actualTheme = theme === 'system' ? systemTheme : theme;
 
   useEffect(() => {
     let cancelled = false;
 
     mermaid.initialize({
       startOnLoad: false,
-      theme: systemTheme === 'dark' ? 'dark' : 'default',
+      theme: actualTheme === 'dark' ? 'dark' : 'default',
       securityLevel: 'strict',
     });
 
@@ -47,7 +51,7 @@ const MermaidDiagram = ({ chart }: { chart: string }) => {
     return () => {
       cancelled = true;
     };
-  }, [chart, id, systemTheme]);
+  }, [chart, id, actualTheme]);
 
   if (!svg) {
     return null;

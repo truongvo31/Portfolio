@@ -1,3 +1,4 @@
+import { Link } from '@fluentui/react-components';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import MermaidDiagram from '../../../../components/mermaidDiagram';
@@ -112,6 +113,7 @@ const ProjectDescription = ({
               </code>
             );
           },
+          a: ({ href, children }) => <Link href={href ?? ''}>{children}</Link>,
         }}
       >
         {content}
